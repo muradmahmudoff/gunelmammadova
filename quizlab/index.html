@@ -63,7 +63,7 @@ const uname=u=>u.trim().toLowerCase().replace(/[^a-z0-9._-]/g,'')+'@quizlab.scho
 /* ---------- giriş ---------- */
 function authView(msg=''){
   clearInterval(tm);const st=tab==='student';
-  A.innerHTML=`<div style="max-width:420px;margin:6vh auto 0"><div class="logo" style="justify-content:center;margin-bottom:20px"><i>⚡</i>QuizLab</div>
+  A.innerHTML=`<div style="max-width:420px;margin:6vh auto 0"><div class="logo" style="justify-content:center;margin-bottom:20px"><i>⚡</i>Gunel Mammadova</div>
   <div class="card"><div class="tabs"><button class="${st?'on':''}" onclick="setTab('student')">🎒 Şagird</button><button class="${st?'':'on'}" onclick="setTab('teacher')">👩‍🏫 Müəllim</button></div>
   ${st?`${mode==='signup'?`<label>Ad və soyad</label><input id="fn" placeholder="Aysel Məmmədova">`:''}<label>İstifadəçi adı</label><input id="u" autocapitalize="none" placeholder="aysel07">`
   :`<label>Email</label><input id="u" type="email" placeholder="muellim@mekteb.az">`}
