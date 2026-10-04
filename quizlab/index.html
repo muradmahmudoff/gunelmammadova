@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="az"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QuizLab</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f3ff;--card:#fff;--tx:#17163a;--mu:#6b6a8e;--bd:#e6e4fb;--pr:#6c4cf5;--pr2:#b04cf5;--ok:#17b26a;--no:#f04438;--c0:#e5384f;--c1:#2f6fed;--c2:#f2a900;--c3:#1fa971}
+@media(prefers-color-scheme:dark){:root{--bg:#0e0d22;--card:#18173a;--tx:#f1f0ff;--mu:#9e9cc9;--bd:#2a2858}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:'Plus Jakarta Sans',system-ui,sans-serif;min-height:100vh;background-image:radial-gradient(600px 300px at 10% -5%,rgba(108,76,245,.25),transparent),radial-gradient(500px 300px at 95% 0,rgba(176,76,245,.2),transparent)}
+.wrap{max-width:960px;margin:0 auto;padding:20px 16px 60px}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;gap:10px}
+.logo{font-weight:800;font-size:22px;display:flex;gap:10px;align-items:center;cursor:pointer}
+.logo i{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--pr),var(--pr2));display:grid;place-items:center;color:#fff;font-style:normal}
+.badge{font-size:12px;font-weight:600;padding:6px 12px;border-radius:99px;background:var(--card);border:1px solid var(--bd);color:var(--mu)}
+h1{font-size:clamp(26px,5vw,40px);line-height:1.1;margin:0 0 8px;font-weight:800}
+.grad{background:linear-gradient(90deg,var(--pr),var(--pr2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mu);margin:0 0 22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:22px;padding:20px;box-shadow:0 10px 30px -18px rgba(60,40,160,.35)}
+.card h3{margin:0 0 6px}
+.meta{color:var(--mu);font-size:13px;display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:14px}
+.btn{border:0;cursor:pointer;font:inherit;font-weight:700;padding:11px 18px;border-radius:14px;background:linear-gradient(135deg,var(--pr),var(--pr2));color:#fff}
+.btn:hover{filter:brightness(1.1)}.btn.g{background:var(--bg);color:var(--tx);border:1px solid var(--bd)}.btn.d{background:transparent;color:var(--no);border:1px solid var(--bd)}.btn[disabled]{opacity:.45;pointer-events:none}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pill{font-size:11px;font-weight:800;padding:4px 10px;border-radius:99px}.p-ok{background:rgba(23,178,106,.15);color:var(--ok)}.p-no{background:rgba(240,68,56,.15);color:var(--no)}.p-pr{background:rgba(108,76,245,.15);color:var(--pr)}
+input{width:100%;font:inherit;padding:12px 14px;border-radius:12px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);outline:none}input:focus{border-color:var(--pr)}
+label{font-size:12px;font-weight:700;color:var(--mu);display:block;margin:12px 0 6px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tabs{display:flex;background:var(--bg);border-radius:14px;padding:4px;margin-bottom:12px}.tabs button{flex:1;border:0;background:none;font:inherit;font-weight:700;padding:10px;border-radius:11px;color:var(--mu);cursor:pointer}.tabs button.on{background:var(--card);color:var(--pr);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.q{border:1px dashed var(--bd);border-radius:18px;padding:16px;margin-top:14px}.opt{display:flex;gap:8px;align-items:center;margin-top:8px}.opt input[type=radio]{width:auto;accent-color:var(--pr)}
+.video{aspect-ratio:16/9;width:100%;border:0;border-radius:18px;background:#000}
+.timer{height:10px;border-radius:99px;background:var(--bd);overflow:hidden;margin:14px 0}.timer b{display:block;height:100%;background:linear-gradient(90deg,var(--pr),var(--pr2));transition:width .1s linear}
+.qtext{font-size:clamp(22px,4vw,30px);font-weight:800;text-align:center;padding:26px 8px}
+.ans{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.a{border:0;color:#fff;font:inherit;font-weight:700;font-size:17px;padding:26px 14px;border-radius:18px;cursor:pointer;display:flex;gap:10px;align-items:center;text-align:left;box-shadow:0 6px 0 rgba(0,0,0,.2)}.a:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px}.kpi b{display:block;font-size:30px;font-weight:800}.kpi span{color:var(--mu);font-size:13px}
+.hbar{height:8px;background:var(--bd);border-radius:9px;overflow:hidden;flex:1}.hbar i{display:block;height:100%;background:var(--ok)}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:10px 8px;text-align:left;border-bottom:1px solid var(--bd)}th{color:var(--mu);font-size:12px}.scroll{overflow-x:auto}
+.big{font-size:60px;text-align:center}.empty{text-align:center;color:var(--mu);padding:36px}
+.res{display:flex;gap:12px;justify-content:center;margin:12px 0}.res div{padding:16px 26px;border-radius:18px;font-weight:800;font-size:28px}.res small{display:block;font-size:12px;font-weight:600}
+.err{color:var(--no);font-size:13px;margin-top:10px;min-height:18px}
+@media(max-width:560px){.two,.ans{grid-template-columns:1fr}}
+</style></head><body><div class="wrap" id="app"></div>
+<script type="module">
+import {createClient} from 'https://esm.sh/@supabase/supabase-js@2';
+/* ====== BURANI DOLDURUN ====== */
+const SUPABASE_URL='https://XXXX.supabase.co';
+const SUPABASE_KEY='ANON_PUBLIC_KEY';
+/* ============================= */
+const sb=createClient(SUPABASE_URL,SUPABASE_KEY);
+const $=s=>document.querySelector(s),A=$('#app');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const COL=['var(--c0)','var(--c1)','var(--c2)','var(--c3)'],SH=['▲','◆','●','■'];
+const fmt=t=>t?new Date(t).toLocaleString('az',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'';
+const ytId=u=>(String(u||'').match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/)||[])[1];
+const video=u=>ytId(u)?`<iframe class="video" src="https://www.youtube-nocookie.com/embed/${ytId(u)}" allowfullscreen></iframe>`:'';
+const open=t=>!t.deadline||Date.now()<new Date(t.deadline).getTime();
+let prof=null,tab='student',mode='login',tm=null,draft=null,run=null;
+const shell=h=>`<div class="top"><div class="logo" onclick="home()"><i>⚡</i>QuizLab</div><div class="row"><span class="badge">${prof.role==='teacher'?'👩‍🏫':'🎒'} ${esc(prof.full_name)}</span><button class="btn g" style="padding:6px 12px" onclick="out()">Çıxış</button></div></div>${h}`;
+const uname=u=>u.trim().toLowerCase().replace(/[^a-z0-9._-]/g,'')+'@quizlab.school';
+
+/* ---------- giriş ---------- */
+function authView(msg=''){
+  clearInterval(tm);const st=tab==='student';
+  A.innerHTML=`<div style="max-width:420px;margin:6vh auto 0"><div class="logo" style="justify-content:center;margin-bottom:20px"><i>⚡</i>QuizLab</div>
+  <div class="card"><div class="tabs"><button class="${st?'on':''}" onclick="setTab('student')">🎒 Şagird</button><button class="${st?'':'on'}" onclick="setTab('teacher')">👩‍🏫 Müəllim</button></div>
+  ${st?`${mode==='signup'?`<label>Ad və soyad</label><input id="fn" placeholder="Aysel Məmmədova">`:''}<label>İstifadəçi adı</label><input id="u" autocapitalize="none" placeholder="aysel07">`
+  :`<label>Email</label><input id="u" type="email" placeholder="muellim@mekteb.az">`}
+  <label>Parol</label><input id="p" type="password" placeholder="••••••" onkeydown="if(event.key==='Enter')submit()">
+  <div class="err" id="er">${esc(msg)}</div>
+  <button class="btn" style="width:100%;padding:14px" onclick="submit()">${mode==='signup'&&st?'Qeydiyyatdan keç':'Daxil ol'}</button>
+  ${st?`<p style="text-align:center;font-size:13px;color:var(--mu);margin:14px 0 0;cursor:pointer" onclick="mode=mode==='login'?'signup':'login';authView()">${mode==='login'?'Hesabın yoxdur? Qeydiyyat':'Hesabın var? Daxil ol'}</p>`:''}</div></div>`;
+}
+window.setTab=t=>{tab=t;mode='login';authView()};
+window.submit=async()=>{
+  const u=$('#u').value,p=$('#p').value,er=$('#er');er.textContent='';
+  if(!u||!p)return er.textContent='Bütün xanaları doldurun';
+  const email=tab==='student'?uname(u):u.trim();
+  let r;
+  if(tab==='student'&&mode==='signup'){
+    const fn=$('#fn').value.trim();if(!fn)return er.textContent='Ad və soyadı yazın';
+    if(p.length<6)return er.textContent='Parol ən azı 6 simvol olmalıdır';
+    r=await sb.auth.signUp({email,password:p,options:{data:{full_name:fn}}});
+  }else r=await sb.auth.signInWithPassword({email,password:p});
+  if(r.error)return er.textContent=r.error.message.includes('Invalid login')?'İstifadəçi adı/email və ya parol səhvdir':r.error.message;
+  boot();
+};
+window.out=async()=>{await sb.auth.signOut();prof=null;authView()};
+
+async function boot(){
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session)return authView();
+  const {data}=await sb.from('profiles').select('*').eq('id',session.user.id).single();
+  prof=data;
+  if(!prof){await sb.auth.signOut();return authView('Profil tapılmadı')}
+  if(prof.role==='teacher'&&tab==='student'){await sb.auth.signOut();prof=null;return authView('Bu hesab müəllimə aiddir. "Müəllim" tabından daxil olun.')}
+  if(prof.role==='student'&&tab==='teacher'){await sb.auth.signOut();prof=null;return authView('Bu hesab müəllim deyil.')}
+  home();
+}
+window.home=()=>{clearInterval(tm);prof.role==='teacher'?tHome():sHome()};
+
+/* ---------- şagird ---------- */
+async function sHome(){
+  A.innerHTML=shell('<div class="empty">Yüklənir…</div>');
+  const [t,a]=await Promise.all([sb.from('tests').select('*,questions(count)').order('created_at',{ascending:false}),sb.from('attempts').select('*')]);
+  const mine=Object.fromEntries((a.data||[]).map(x=>[x.test_id,x]));
+  A.innerHTML=shell(`<h1>Salam! <span class="grad">Test həll et</span></h1><p class="sub">Testi seç və başla. Bitirəndə neçə düzgün, neçə səhv etdiyini görəcəksən.</p>
+  ${(t.data||[]).length?'':'<div class="card empty">Hələlik test yoxdur.</div>'}<div class="grid">${(t.data||[]).map(x=>{const r=mine[x.id],o=open(x);return `<div class="card"><div class="row" style="margin-bottom:10px"><span class="pill ${o?'p-ok':'p-no'}">${o?'Açıqdır':'Bağlanıb'}</span>${r?'<span class="pill p-pr">Həll olunub</span>':''}</div><h3>${esc(x.title)}</h3>
+  <div class="meta"><span>❓ ${x.questions[0].count} sual</span><span>⏱ ${x.seconds_per_q} san</span>${x.deadline?`<span>📅 ${fmt(x.deadline)} qədər</span>`:''}</div>
+  ${r?`<button class="btn g" onclick="result('${x.id}')">Nəticə: ${r.correct}/${r.total} ✔</button>`:`<button class="btn" ${o?'':'disabled'} onclick="intro('${x.id}')">Başla →</button>`}</div>`}).join('')}</div>`);
+}
+window.intro=async id=>{
+  const {data:t}=await sb.from('tests').select('*').eq('id',id).single();
+  A.innerHTML=shell(`<h1>${esc(t.title)}</h1><div class="meta"><span>⏱ hər sual ${t.seconds_per_q} san</span>${t.deadline?`<span>📅 ${fmt(t.deadline)} qədər</span>`:''}</div>
+  ${t.video_url?`<div class="card" style="margin-bottom:16px"><b>🎬 İzah videosu</b><div style="margin-top:12px">${video(t.video_url)}</div></div>`:''}
+  <button class="btn" style="width:100%;padding:16px;font-size:18px" onclick="start('${id}')">🚀 Testə başla</button> <button class="btn g" style="margin-top:10px" onclick="home()">← Geri</button>`);
+};
+window.start=async id=>{
+  const [{data:t},{data:qs}]=await Promise.all([sb.from('tests').select('*').eq('id',id).single(),sb.from('questions').select('id,text,options').eq('test_id',id).order('position')]);
+  if(!open(t))return alert('Test bağlanıb');
+  run={t,qs,i:0,ans:[],t0:Date.now()};ask();
+};
+function ask(){
+  const {t,qs,i}=run,q=qs[i];run.qs=Date.now();run.lock=false;
+  A.innerHTML=shell(`<div class="row" style="justify-content:space-between"><span class="badge">Sual ${i+1}/${qs.length}</span></div><div class="timer"><b id="tb" style="width:100%"></b></div><div class="qtext">${esc(q.text)}</div>
+  <div class="ans">${q.options.map((o,j)=>o.trim()?`<button class="a" style="background:${COL[j]}" onclick="pick(${j})"><span style="font-size:22px">${SH[j]}</span>${esc(o)}</button>`:'').join('')}</div>`);
+  clearInterval(tm);tm=setInterval(()=>{const l=Math.max(0,1-(Date.now()-run.qs)/1000/t.seconds_per_q);const b=$('#tb');if(b)b.style.width=l*100+'%';if(l<=0)pick(-1)},100);
+}
+window.pick=async j=>{
+  if(run.lock)return;run.lock=true;clearInterval(tm);run.ans.push(j);run.i++;
+  if(run.i<run.qs.length)return ask();
+  A.innerHTML=shell('<div class="empty">Nəticə hesablanır…</div>');
+  const {error}=await sb.rpc('submit_attempt',{p_test:run.t.id,p_answers:run.ans,p_time:Math.round((Date.now()-run.t0)/1000)});
+  const id=run.t.id;run=null;if(error)alert(error.message);result(id);
+};
+window.result=async id=>{
+  A.innerHTML=shell('<div class="empty">Yüklənir…</div>');
+  const [{data:t},{data:qs},{data:a}]=await Promise.all([sb.from('tests').select('*').eq('id',id).single(),sb.from('questions').select('*,answer_keys(correct)').eq('test_id',id).order('position'),sb.from('attempts').select('*').eq('test_id',id).maybeSingle()]);
+  if(!a)return home();
+  A.innerHTML=shell(`<div class="card" style="text-align:center"><div class="big">${a.correct/a.total>=.8?'🏆':a.correct/a.total>=.5?'👏':'💪'}</div><h1>${esc(t.title)}</h1>
+  <div class="res"><div style="background:rgba(23,178,106,.15);color:var(--ok)">${a.correct}<small>Düzgün</small></div><div style="background:rgba(240,68,56,.15);color:var(--no)">${a.total-a.correct}<small>Səhv</small></div></div>
+  <p class="sub" style="margin:0">${Math.round(a.correct/a.total*100)}% · ${a.time_sec} saniyə</p><br><button class="btn" onclick="home()">Ana səhifə</button></div>
+  ${t.video_url?`<div class="card" style="margin-top:16px"><b>🎬 İzah videosu</b><div style="margin-top:12px">${video(t.video_url)}</div></div>`:''}
+  <h3 style="margin-top:24px">Cavablarına bax</h3>${qs.map((q,i)=>{const ok=a.per_q[i],c=q.answer_keys?.correct??q.answer_keys?.[0]?.correct,s=a.answers[i];return `<div class="card" style="margin-bottom:10px"><span class="pill ${ok?'p-ok':'p-no'}">${ok?'Düzgün':'Səhv'}</span> <b>${i+1}. ${esc(q.text)}</b>
+  <div class="meta" style="margin:8px 0 0"><span>Sənin cavabın: ${s>=0?esc(q.options[s]):'—'}</span><span>Düzgün: ${esc(q.options[c])}</span></div>${q.explanation?`<div style="color:var(--mu);font-size:13px;margin-top:6px">💡 ${esc(q.explanation)}</div>`:''}</div>`}).join('')}`);
+};
+
+/* ---------- müəllim ---------- */
+async function tHome(){
+  A.innerHTML=shell('<div class="empty">Yüklənir…</div>');
+  const [t,a]=await Promise.all([sb.from('tests').select('*,questions(count)').order('created_at',{ascending:false}),sb.from('attempts').select('test_id')]);
+  const n={};(a.data||[]).forEach(x=>n[x.test_id]=(n[x.test_id]||0)+1);
+  A.innerHTML=shell(`<h1>Testlərim</h1><p class="sub">Test yarat, düzgün cavabları işarələ, nəticələri izlə.</p><div class="row" style="margin-bottom:18px"><button class="btn" onclick="newTest()">＋ Yeni test</button></div>
+  ${(t.data||[]).length?'':'<div class="card empty">Hələ test yoxdur.</div>'}<div class="grid">${(t.data||[]).map(x=>`<div class="card"><span class="pill ${open(x)?'p-ok':'p-no'}">${open(x)?'Açıqdır':'Bağlanıb'}</span><h3 style="margin-top:10px">${esc(x.title)}</h3>
+  <div class="meta"><span>❓ ${x.questions[0].count}</span><span>⏱ ${x.seconds_per_q} san</span><span>👥 ${n[x.id]||0}</span>${x.deadline?`<span>📅 ${fmt(x.deadline)}</span>`:''}</div>
+  <div class="row"><button class="btn" onclick="stats('${x.id}')">📊 Statistika</button><button class="btn d" onclick="delTest('${x.id}')">Sil</button></div></div>`).join('')}</div>`);
+}
+const blankQ=()=>({q:'',o:['','','',''],c:0,e:''});
+window.newTest=()=>{draft={title:'',video:'',deadline:'',sec:20,qs:[blankQ()]};editor()};
+function editor(){
+  A.innerHTML=shell(`<h1>Yeni test</h1><p class="sub">Düzgün cavabın yanındakı dairəni işarələyin.</p>
+  <div class="card"><label style="margin-top:0">Test adı</label><input id="d_t" value="${esc(draft.title)}"><label>YouTube izah videosu (istəyə bağlı)</label><input id="d_v" value="${esc(draft.video)}" placeholder="https://youtu.be/...">
+  <div class="two"><div><label>Son tarix və saat</label><input id="d_d" type="datetime-local" value="${draft.deadline}"></div><div><label>Hər sual üçün saniyə</label><input id="d_s" type="number" min="5" value="${draft.sec}"></div></div></div>
+  ${draft.qs.map((q,i)=>`<div class="q card"><b>Sual ${i+1}</b>${draft.qs.length>1?`<button class="btn d" style="float:right;padding:5px 12px" onclick="rmQ(${i})">Sil</button>`:''}<label>Sual mətni</label><input class="q_q" value="${esc(q.q)}">
+  ${q.o.map((o,j)=>`<div class="opt"><span style="color:${COL[j]};font-weight:800">${SH[j]}</span><input class="q_o" value="${esc(o)}" placeholder="Cavab ${j+1}"><input type="radio" name="c${i}" ${q.c===j?'checked':''} title="Düzgün cavab"></div>`).join('')}
+  <label>Düzgün cavabın izahı (istəyə bağlı)</label><input class="q_e" value="${esc(q.e)}"></div>`).join('')}
+  <div class="row" style="margin-top:16px"><button class="btn g" onclick="addQ()">＋ Sual</button><button class="btn" onclick="save()">💾 Yadda saxla</button><button class="btn d" onclick="home()">Ləğv et</button></div>`);
+}
+function collect(){
+  draft.title=$('#d_t').value;draft.video=$('#d_v').value;draft.deadline=$('#d_d').value;draft.sec=+$('#d_s').value||20;
+  const qq=[...document.querySelectorAll('.q_q')],oo=[...document.querySelectorAll('.q_o')],ee=[...document.querySelectorAll('.q_e')];
+  draft.qs=draft.qs.map((_,i)=>({q:qq[i].value,o:[0,1,2,3].map(j=>oo[i*4+j].value),c:Math.max(0,[...document.getElementsByName('c'+i)].findIndex(r=>r.checked)),e:ee[i].value}));
+}
+window.addQ=()=>{collect();draft.qs.push(blankQ());editor()};
+window.rmQ=i=>{collect();draft.qs.splice(i,1);editor()};
+window.save=async()=>{
+  collect();if(!draft.title.trim())return alert('Test adını yazın');
+  const qs=draft.qs.filter(q=>q.q.trim()&&q.o[q.c]?.trim()&&q.o.filter(x=>x.trim()).length>=2);
+  if(!qs.length)return alert('Ən azı bir sual, 2 cavab və düzgün cavab işarələyin');
+  const {data:t,error}=await sb.from('tests').insert({title:draft.title.trim(),video_url:draft.video.trim()||null,seconds_per_q:draft.sec,deadline:draft.deadline?new Date(draft.deadline).toISOString():null}).select().single();
+  if(error)return alert(error.message);
+  const {data:ins,error:e2}=await sb.from('questions').insert(qs.map((q,i)=>({test_id:t.id,position:i,text:q.q.trim(),options:q.o,explanation:q.e.trim()||null}))).select('id,position');
+  if(e2)return alert(e2.message);
+  const {error:e3}=await sb.from('answer_keys').insert(ins.map(r=>({question_id:r.id,correct:qs[r.position].c})));
+  if(e3)return alert(e3.message);
+  home();
+};
+window.delTest=async id=>{if(confirm('Test və bütün nəticələri silinsin?')){await sb.from('tests').delete().eq('id',id);tHome()}};
+window.stats=async id=>{
+  A.innerHTML=shell('<div class="empty">Yüklənir…</div>');
+  const [{data:t},{data:qs},{data:rs}]=await Promise.all([sb.from('tests').select('*').eq('id',id).single(),sb.from('questions').select('text').eq('test_id',id).order('position'),sb.from('attempts').select('*,profiles(full_name)').eq('test_id',id).order('correct',{ascending:false})]);
+  const n=rs.length,pc=r=>Math.round(r.correct/r.total*100),avg=n?Math.round(rs.reduce((s,r)=>s+pc(r),0)/n):0;
+  A.innerHTML=shell(`<div class="row" style="justify-content:space-between"><h1 style="font-size:28px">${esc(t.title)}</h1><button class="btn g" onclick="home()">← Geri</button></div>
+  <div class="kpis"><div class="card kpi"><b>${n}</b><span>İştirakçı</span></div><div class="card kpi"><b>${avg}%</b><span>Orta nəticə</span></div><div class="card kpi"><b>${n?pc(rs[0])+'%':'—'}</b><span>Ən yüksək</span></div></div>
+  <div class="card"><b>Suallar üzrə düzgün cavab</b>${qs.map((q,i)=>{const r=n?Math.round(rs.filter(x=>x.per_q[i]).length/n*100):0;return `<div class="row" style="flex-wrap:nowrap;margin-top:10px"><span style="width:24px;font-size:12px;color:var(--mu)">S${i+1}</span><div class="hbar"><i style="width:${r}%;background:${r<50?'var(--no)':'var(--ok)'}"></i></div><span style="width:40px;font-size:12px">${r}%</span></div>`}).join('')}</div>
+  <div class="card scroll" style="margin-top:16px"><b>Şagirdlər</b>${n?`<table><tr><th>#</th><th>Ad</th><th>Düzgün</th><th>Səhv</th><th>Faiz</th><th>Müddət</th><th>Tarix</th></tr>${rs.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(r.profiles?.full_name)}</td><td style="color:var(--ok)"><b>${r.correct}</b></td><td style="color:var(--no)"><b>${r.total-r.correct}</b></td><td>${pc(r)}%</td><td>${r.time_sec} san</td><td>${fmt(r.created_at)}</td></tr>`).join('')}</table>`:'<div class="empty">Hələ heç kim həll etməyib</div>'}</div>`);
+};
+boot();
+</script></body></html>
