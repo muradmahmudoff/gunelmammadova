@@ -57,7 +57,7 @@ const ytId=u=>(String(u||'').match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11
 const video=u=>ytId(u)?`<iframe class="video" src="https://www.youtube-nocookie.com/embed/${ytId(u)}" allowfullscreen></iframe>`:'';
 const open=t=>!t.deadline||Date.now()<new Date(t.deadline).getTime();
 let prof=null,tab='student',mode='login',tm=null,draft=null,run=null;
-const shell=h=>`<div class="top"><div class="logo" onclick="home()"><i>⚡</i>QuizLab</div><div class="row"><span class="badge">${prof.role==='teacher'?'👩‍🏫':'🎒'} ${esc(prof.full_name)}</span><button class="btn g" style="padding:6px 12px" onclick="out()">Çıxış</button></div></div>${h}`;
+const shell=h=>`<div class="top"><div class="logo" onclick="home()"><i>⚡</i>Gunel Mammadova</div><div class="row"><span class="badge">${prof.role==='teacher'?'👩‍🏫':'🎒'} ${esc(prof.full_name)}</span><button class="btn g" style="padding:6px 12px" onclick="out()">Çıxış</button></div></div>${h}`;
 const uname=u=>u.trim().toLowerCase().replace(/[^a-z0-9._-]/g,'')+'@quizlab.school';
 
 /* ---------- giriş ---------- */
