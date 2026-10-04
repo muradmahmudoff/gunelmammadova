@@ -70,9 +70,10 @@ function authView(msg=''){
   <label>Parol</label><input id="p" type="password" placeholder="••••••" onkeydown="if(event.key==='Enter')submit()">
   <div class="err" id="er">${esc(msg)}</div>
   <button class="btn" style="width:100%;padding:14px" onclick="submit()">${mode==='signup'&&st?'Qeydiyyatdan keç':'Daxil ol'}</button>
-  ${st?`<p style="text-align:center;font-size:13px;color:var(--mu);margin:14px 0 0;cursor:pointer" onclick="mode=mode==='login'?'signup':'login';authView()">${mode==='login'?'Hesabın yoxdur? Qeydiyyat':'Hesabın var? Daxil ol'}</p>`:''}</div></div>`;
+  ${st?`<p style="text-align:center;font-size:13px;color:var(--mu);margin:14px 0 0;cursor:pointer" onclick="toggleMode()">${mode==='login'?'Hesabın yoxdur? Qeydiyyat':'Hesabın var? Daxil ol'}</p>`:''}</div></div>`;
 }
 window.setTab=t=>{tab=t;mode='login';authView()};
+window.toggleMode=()=>{mode=mode==='login'?'signup':'login';authView()};
 window.submit=async()=>{
   const u=$('#u').value,p=$('#p').value,er=$('#er');er.textContent='';
   if(!u||!p)return er.textContent='Bütün xanaları doldurun';
